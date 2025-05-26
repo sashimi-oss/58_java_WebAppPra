@@ -31,6 +31,7 @@ create table diary (
 
 /* テーブルINSERT */
 
--- insert into diary (title, content) values ('java', 'むずい');
--- insert into diary (title, content) values ('javascript', 'Node.jsむずい、ReactとNext.jsが気になる');
+insert into category (category_name) values ('programming');
+insert into diary (title, content, category_id) values ('java', 'むずい', 1);
+insert into diary (title, content, category_id) values ('javascript', 'Node.jsむずい、ReactとNext.jsが気になる', 1);
 
