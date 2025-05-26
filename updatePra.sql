@@ -13,16 +13,24 @@ GRANT ALL PRIVILEGES ON diary_db.* TO diaryU;
 USE diary_db;
 
 /* テーブルの作成 */
+create table category (
+    category_id int auto_increment primary key,
+    category_name varchar(20) not null
+);
+
 create table diary (
-id INT(8) AUTO_INCREMENT,
-title VARCHAR(30) NOT NULL,
-content VARCHAR(400) NOT NULL,
+    id INT(8) AUTO_INCREMENT,
+    title VARCHAR(30) NOT NULL,
+    content VARCHAR(400) NOT NULL,
     created_at datetime default current_timestamp,
-PRIMARY KEY (id)
+    updated_at datetime default current_timestamp on update current_timestamp,
+    category_id int not null,
+    PRIMARY KEY (id),
+    foreign key (category_id) references category(category_id)
 );
 
 /* テーブルINSERT */
 
-insert into diary (title, content) values ('java', 'むずい');
-insert into diary (title, content) values ('javascript', 'Node.jsむずい、ReactとNext.jsが気になる');
+-- insert into diary (title, content) values ('java', 'むずい');
+-- insert into diary (title, content) values ('javascript', 'Node.jsむずい、ReactとNext.jsが気になる');
 
