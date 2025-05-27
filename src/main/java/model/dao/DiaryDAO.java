@@ -39,7 +39,9 @@ public class DiaryDAO {
 	
 	public DiaryBean select(int id) throws SQLException, ClassNotFoundException {
 		DiaryBean diary = new DiaryBean();
-		String sql = "select * from diary where id = ?";
+//		String sql = "select * from diary where id = ?";
+		String sql = "select t1.id, t1.title, t1.content, t1.created_at, t1.category_id, t2.category_name "
+				+ "from diary t1 inner join category t2 on t1.category_id = t2.category_id where t1.id = ?";
 		try(Connection con = ConnectionManager.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			
@@ -52,6 +54,8 @@ public class DiaryDAO {
 				diary.setTitle(rs.getString("title"));
 				diary.setContent(rs.getString("content"));
 				diary.setCreatedAt(rs.getDate("created_at"));
+				diary.setCategoryId(rs.getInt("category_id"));
+				diary.setCategoryName(rs.getString("category_name"));
 			}
 			
 		}
@@ -75,6 +79,27 @@ public class DiaryDAO {
 			
 		}
 		return count;
+	}
+	
+	public List<DiaryBean> getCategoryList() throws SQLException, ClassNotFoundException {
+		String sql = "select * from category";
+		List<DiaryBean> categoryList = new ArrayList<DiaryBean>();
+		
+		try (Connection con = ConnectionManager.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next() ) {
+				DiaryBean category = new DiaryBean();
+				
+				category.setCategoryId(rs.getInt("category_id"));
+				category.setCategoryName(rs.getString("category_name"));
+				
+				categoryList.add(category);
+			}
+		}
+		return categoryList;
 	}
 
 }

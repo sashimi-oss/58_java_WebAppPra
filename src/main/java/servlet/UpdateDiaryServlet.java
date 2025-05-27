@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -46,9 +47,11 @@ public class UpdateDiaryServlet extends HttpServlet {
 		int updateId = Integer.parseInt(request.getParameter("update-id"));
 		DiaryDAO dao = new DiaryDAO();
 		DiaryBean diary = new DiaryBean();
+		List<DiaryBean> categoryList = null;
 		
 		try {
 			diary = dao.select(updateId);
+			categoryList = dao.getCategoryList();
 			
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -56,6 +59,7 @@ public class UpdateDiaryServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("diary", diary);
+		session.setAttribute("categoryList", categoryList);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("update-form.jsp");
 		rd.forward(request, response);

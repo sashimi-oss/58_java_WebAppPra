@@ -9,7 +9,25 @@ public class DiaryBean implements Serializable{
 	private String title;
 	private String content;
 	private Date createdAt;
+	private int categoryId;
+	private String categoryName;
 	
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
 	public DiaryBean() {
 		
 	}

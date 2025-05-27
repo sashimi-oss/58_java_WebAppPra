@@ -14,6 +14,12 @@
 
 <form action="update-diary-confirm-servlet" method="post">
 	<input type="text" name="title" value=${sessionScope.diary.title} /><br>
+	<select name="category-id">
+		<c:forEach var="category" items="${categoryList}">
+			<option value=${category.categoryId}>${category.categoryName}</option>
+		</c:forEach>
+	
+	</select>
 	<textarea name="content">${sessionScope.diary.content}</textarea><br>
 	${sessionScope.diary.createdAt}<br>
 
