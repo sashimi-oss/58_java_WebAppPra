@@ -35,6 +35,10 @@ ${diary.categoryName }<br>
 </c:choose>
 </c:forEach>
 
+<!--session からcategoryListをfor文で回してt_tableのidと一致したときのcatery_nameを表示する-->
+<!--ifのときはchooseいらない-->
+<!-- なんか下のキャンセルボタン戻れる hiddenでid送ってるから同じgetParameterでいけるのか！！-->
+
 <form action="update-decision-servlet" method="post">
 	<input type="submit" value="更新">
 </form>

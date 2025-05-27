@@ -43,10 +43,10 @@ public class UpdateDecisionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		doGet(request, response);
-		DiaryBean diary = new DiaryBean();
+//		DiaryBean diary = new DiaryBean();
 		DiaryDAO dao = new DiaryDAO();
 		HttpSession session = request.getSession();
-		diary = (DiaryBean) session.getAttribute("diary");
+		DiaryBean diary = (DiaryBean) session.getAttribute("diary");
 //		System.out.println(diary.getContent());
 		
 		int count = 0;

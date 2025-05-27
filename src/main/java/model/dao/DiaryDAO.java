@@ -15,7 +15,9 @@ public class DiaryDAO {
 	public List<DiaryBean> selectAll() throws SQLException, ClassNotFoundException {
 		List<DiaryBean> diaryList = new ArrayList<DiaryBean>();
 		
-		String sql = "select * from diary";
+//		String sql = "select * from diary";
+		String sql = "select t1.id, t1.title, t1.content, t1.created_at, t1.category_id, t2.category_name "
+				+ "from diary t1 inner join category t2 on t1.category_id = t2.category_id";
 		
 		try(Connection con = ConnectionManager.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
@@ -29,6 +31,8 @@ public class DiaryDAO {
 				diary.setTitle(rs.getString("title"));
 				diary.setContent(rs.getString("content"));
 				diary.setCreatedAt(rs.getDate("created_at"));
+				diary.setCategoryId(rs.getInt("category_id"));
+				diary.setCategoryName(rs.getString("category_name"));
 				
 				diaryList.add(diary);
 			}
@@ -41,7 +45,7 @@ public class DiaryDAO {
 		DiaryBean diary = new DiaryBean();
 //		String sql = "select * from diary where id = ?";
 		String sql = "select t1.id, t1.title, t1.content, t1.created_at, t1.category_id, t2.category_name "
-				+ "from diary t1 inner join category t2 on t1.category_id = t2.category_id where t1.id = ?";
+				+ "from diary t1 inner join category t2 on t1.category_id = t2.category_id ";
 		try(Connection con = ConnectionManager.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			
@@ -63,8 +67,15 @@ public class DiaryDAO {
 		return diary;
 	}
 	
+	/**
+	 * t_tableのフィールドを更新する　それだけ
+	 * @param diary
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public int update(DiaryBean diary) throws SQLException, ClassNotFoundException {
-		String sql = "update diary set title=?, content=?, created_at=? where id=?";
+		String sql = "update diary set title=?, content=?, created_at=?, category_id = ? where id=?";
 		int count = 0;
 		
 		try(Connection con = ConnectionManager.getConnection();
@@ -74,6 +85,8 @@ public class DiaryDAO {
 			pstmt.setString(2, diary.getContent());
 			pstmt.setDate(3, diary.getCreatedAt());
 			pstmt.setInt(4, diary.getId());
+			pstmt.setInt(5, diary.getCategoryId());
+			
 			count = pstmt.executeUpdate();
 			
 			
